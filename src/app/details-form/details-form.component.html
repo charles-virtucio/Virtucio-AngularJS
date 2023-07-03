@@ -1,0 +1,84 @@
+<div class="container appointment-container shadow-lg">
+    <div class="back container pt-5 px-4 text-start" (click)="goBack()">
+        <div class="d-flex gap-2">
+            <i class="bi bi-arrow-left action"></i> <span class="fw-bold">Back</span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="container d-flex flex-column mt-4">
+            <h1>Enter your details</h1>
+            <span class="small fs-6">Please check your entries. Proceed if all details are correct.</span>
+        </div>
+        <div class="container d-flex flex-column mt-4">
+            <span class="small fs-6">Selected Service</span>
+            <span class="fw-semibold text-lg">{{ _dataService.service }} - {{ _dataService.selectedService }}</span>
+        </div>
+        <div class="container d-flex flex-column mt-3">
+            <span class="small fs-6">Selected Date & Time</span>
+            <span class="fw-semibold text-lg">{{ _dataService.selectedDate }} - {{ _dataService.selectedTimeslot }}</span>
+        </div>
+    
+        <div class="container mt-3"> 
+            <form #detailsForm="ngForm" *ngIf="!submitted" (ngSubmit)="onSubmit()" novalidate >
+                <span class="small fs-6">{{ 'enter personal details' | uppercase }}</span> 
+                
+                <div class="form-floating mb-3 mt-3">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="floatingInput" 
+                        placeholder="Name" 
+                        required
+                        #name="ngModel"
+                        [class.is-invalid]="name.invalid && name.touched"
+                        [(ngModel)]="detailsModel.name" 
+                        name="name">
+                    <label for="floatingInput">Name</label>
+                    <small class="text-danger" [class.d-none]="name.valid || name.untouched">Name is required</small>
+                </div>
+                <div class="form-floating mb-3">
+                    <input 
+                        type="tel" 
+                        class="form-control" 
+                        id="floatingInput" 
+                        placeholder="639123456789" 
+                        required
+                        #phone="ngModel"
+                        pattern="^(\+?\d{2}?\s?\d{3}\s?\d{3}\s?\d{4})|([0]\d{3}\s?\d{3}\s?\d{4})$"
+                        [class.is-invalid]="phone.invalid && phone.touched"
+                        [(ngModel)]="detailsModel.phone" 
+                        name="phone">
+                    <label for="floatingInput">Mobile Number</label>
+                    <small class="text-danger" [class.d-none]="phone.valid || phone.untouched">Mobile number is invalid</small>
+                </div>
+                <div class="form-floating mb-3">
+                    <input 
+                        type="email" 
+                        class="form-control" 
+                        id="floatingInput" 
+                        placeholder="Email (Optional)" 
+                        [(ngModel)]="detailsModel.email"
+                        name="email">
+                    <label for="floatingInput">Email</label>
+                </div>
+                <div class="form-floating pb-5">
+                    <textarea 
+                        class="form-control" 
+                        placeholder="Comments / Remarks (Optional)" 
+                        id="floatingTextarea" 
+                        [(ngModel)]="detailsModel.comments"
+                        name="comments"></textarea>
+                    <label for="floatingTextarea">Comments / Remarks (Optional)</label>
+                </div>
+
+                <button 
+                    class="mb-5 submit" 
+                    type="submit" 
+                    [class.is-disabled]="detailsForm.invalid"
+                    [disabled]="detailsForm.form.invalid">
+                    {{ !detailsForm.form.invalid ? 'Proceed' : 'Fill out the fields above to proceed'}}
+                </button>
+            </form>        
+        </div>
+    </div>
+</div>
